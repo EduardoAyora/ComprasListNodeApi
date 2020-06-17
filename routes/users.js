@@ -103,5 +103,24 @@ router.route('/products/:productId')
         }
     }, (err) => next(err))
 })
+.delete(authenticate.verifyUser, (req, res, next) => {
+    Products.findById(req.params.productId)
+    .then((product) => {
+        if(req.user._id.toString() === product.user._id.toString()) {
+          Products.remove({_id: product._id})
+          .then((resp) => {
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'application/json');
+              res.json(resp);
+          }, (err) => next(err))
+          .catch((err) => next(err));
+        }
+        else {
+          var err = new Error('Tu no puedes eliminar este producto');
+          err.status = 403;
+          next(err);
+        }
+    }, (err) => next(err))
+});
 
 module.exports = router;
