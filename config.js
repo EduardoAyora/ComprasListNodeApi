@@ -1,4 +1,4 @@
 module.exports = {
-    'secretKey': '12345-67890-09876-54321',
+    'secretKey': 'conEstClvenoPuedenDescNunca',
     'mongoUrl' : 'mongodb://localhost:27017/compras'
 }
